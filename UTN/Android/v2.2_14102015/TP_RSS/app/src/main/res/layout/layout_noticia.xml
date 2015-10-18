@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/lyItemNoticia">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/imgVImagenNoticia"
+                android:background="@drawable/abc_btn_check_to_on_mtrl_015"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="false">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:hint="Fecha de la noticia"
+                android:textSize="@dimen/abc_text_size_small_material"
+                android:id="@+id/txtVFechaNoticia" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:hint="Encabezado de la noticia"
+                android:textSize="@dimen/abc_text_size_small_material"
+                android:id="@+id/txtVEncabezadoNoticia"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:hint="Desarrollo de la noticia"
+                android:textSize="@dimen/abc_text_size_small_material"
+                android:id="@+id/txtVDesarroloDeLaNoticia" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
