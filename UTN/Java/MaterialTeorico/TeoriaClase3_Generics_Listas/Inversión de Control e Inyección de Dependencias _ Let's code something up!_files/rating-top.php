@@ -1,0 +1,11 @@
+
+var top_rated_output = '<p><strong>Posts</strong> | <a href="javascript:" onclick="PDRTJS_TOP.get_top( \'pages\', \'0\' );">Pages</a> | <a href="javascript:" onclick="PDRTJS_TOP.get_top( \'comments\', \'0\' );">Comments</a></p><p><strong><small>All</small></strong> | <a href="javascript:" title="Posts created today" onclick="PDRTJS_TOP.get_top( \'posts\', \'1\' );"><small>Today</small></a> | <a href="javascript:" title="Posts created this week" onclick="PDRTJS_TOP.get_top( \'posts\', \'7\' );"><small>This Week</small></a> | <a href="javascript:" title="Posts created this month" onclick="PDRTJS_TOP.get_top( \'posts\', \'31\' );"><small>This Month</small></a></p> <ul id="top_posts"><li><a href="https://danielggarcia.wordpress.com/2013/10/19/bluetooth-i-activando-y-desactivando-el-bluetooth-en-android/">Bluetooth (I): Activando y desactivando el Bluetooth en&nbsp;Android</a><br/><strong> 5/5</strong> (11 votes)</li><li><a href="https://danielggarcia.wordpress.com/2013/12/09/tutorial-de-linq-y-entity-framework/">Tutorial de LINQ y Entity&nbsp;Framework</a><br/><strong> 5/5</strong> (10 votes)</li><li><a href="https://danielggarcia.wordpress.com/2013/11/20/sentencias-en-linq-ii-filtrado-join-y-multiselect/">Sentencias en LINQ (II): Filtrado, Join y&nbsp;Multiselect</a><br/><strong> 5/5</strong> (8 votes)</li><li><a href="https://danielggarcia.wordpress.com/2013/10/28/bluetooth-vi-creando-el-hilo-cliente/">Bluetooth (VI): Creando el hilo&nbsp;cliente</a><br/><strong> 5/5</strong> (7 votes)</li><li><a href="https://danielggarcia.wordpress.com/2013/11/21/sentencias-en-linq-iii-agrupaciones-group-by/">Sentencias en LINQ (III): Agrupaciones (group&nbsp;by)</a><br/><strong> 5/5</strong> (7 votes)</li></ul>';
+var items = document.getElementsByClassName('pd_top_rated_holder_posts'), i, len;
+if ( items.length > 0 ) {
+	// loop through all elements 
+	for (i = 0, len = items.length; i < len; i++) {
+    	items[i].innerHTML = top_rated_output;
+	}
+} else {
+	document.getElementById('pd_top_rated_holder').innerHTML = top_rated_output;
+}

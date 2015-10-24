@@ -1,0 +1,629 @@
+
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+/*  Estilos para el año 2008 */
+/*  Documentos de texto      */
+/*  Vesion 2009/05/17       */
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+
+
+@media aural {  
+  h1, h2, h3 { stress: 20; richness: 90 }
+  .hide { speak: none }
+  p.copyright { volume: x-soft; speech-rate: x-fast }
+  dt { pause-before: 20% }
+  pre { speak-punctuation: code } 
+}
+
+/* Things (icons) that should only show up in projection mode */
+.projection {display: none }
+@media projection { .projection { display: inline } }
+
+@media screen {  /* hide from IE3 */
+       a:hover { background: #ffa } 
+       }
+
+/* pagina de impresion*/
+/* impresion a doble pagina, margenes de la pagina izquierda y derechs*/
+/*
+@page:left{
+     margin-left:1.5cm;
+     margin-right:1.0cm;
+     }
+@page:right{
+     margin-left:1.0cm;
+     margin-right:1.5cm;
+     }
+*/
+@media print {
+  
+	table {
+    page-break-inside: avoid
+  }
+}
+
+
+
+/* -------------------- */
+/* el Body*/
+/*posición:  superior (top), derecho (right), inferior (bottom)izquierdo (left).*/
+body {	
+  /*margin: 1cm 2cm 2cm 2.5cm;*/
+  margin-top:    1.0cm;
+  margin-bottom: 2.0cm;
+  margin-left:   2.5cm;
+  margin-right:  2.0cm;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  color: #000000; /*black;*/
+  font-size: medium;
+  font-style: normal;
+  font-weight: normal;
+  background-color: #F5F5F5;
+  text-align:justify;
+  line-height: 1.4;
+/*  width: 100%;*/
+}
+
+
+
+/*body {BACKGROUND-IMAGE: url(../graficos/LogoVert.gif);}*/
+/* "http://jms32.eresmas.net/web2008/graficos/red/logo_gj01.gif" */
+body 
+{
+  background-image : url(http://jms32.eresmas.net/web2008/graficos/red/LogoVert.gif);
+  background-position: top left;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+
+
+
+/* -------------------- */
+/* los enlaces diversos */
+
+A:link {background: none transparent scroll repeat 0% 0%; COLOR: #0000CC;}
+A:visited {background: none transparent scroll repeat 0% 0%; COLOR: #660099;}
+A:active {background: none transparent scroll repeat 0% 0%; COLOR: #CC0000;}
+
+A:hover{background-color: #8EE8E3; COLOR: #CC0000;}  /* Al pasar el cursor */
+
+
+A:link IMG {BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none}
+A:visited IMG {BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none}
+
+
+/* -------------------- */
+/* las etiquetas H */
+h1, h2, h3, h4, h5, h6 { text-align: left }
+h1, h2, h3 { color: #005A9C }
+
+/*  */
+
+h1 {font-family: 'Courier New', sans-serif;
+    font-style:normal;
+    font-variant:normal;
+    font-weight:normal;
+    font-size: 170%
+}
+h2 {font-family: 'Courier New', sans-serif;
+    font-style:normal;
+    font-variant:normal;
+    font-weight:normal;
+    font-size: 140%
+}
+
+h3 {font-family: 'Courier New', sans-serif;
+    font-style:normal;
+    font-variant:normal;
+    font-weight:normal;
+    font-size: 120%
+}
+h4 {font-family: sans-serif;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: bold;
+    font-size: 100%
+}
+
+h5 {font-family: sans-serif;
+    font-style:  italic;
+    font-variant: normal;
+    font-weight:  normal;
+    font-size: 100%
+}
+
+h5 {font-family: sans-serif;
+    font-style:   normal;
+    font-variant:  small-caps;
+    font-weight:   normal;
+    font-size: 100%
+}
+
+
+
+hr{text-align:left;  
+   margin: 0px;
+   border:0px;
+   color:navy;
+   height:3px;
+   width:100%;}
+
+
+
+/* ----------------------- */
+/* listas de definiciones */     
+
+DT {MARGIN-TOP: 0px; MARGIN-BOTTOM: 0px;}
+DD {MARGIN-TOP: 0px; MARGIN-BOTTOM: 0px;}
+DT {FONT-WEIGHT: bold; color:green;}
+
+
+/* ----------------------- */
+/* listas de  UL / LI */     
+
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+/*   Clases colocads segun el orden de aparicion en el documento */
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+
+/* ++++++++++++++++++++++++++++++++++++++  */
+/* Seccion_InicioDocumento */
+.Seccion_InicioDocumento{}
+
+
+
+/* ++++++++++++++++++++++++++++++++++++++  */
+/* Seccion_BarraNavegacion */
+.Seccion_BarraNavegacion{}
+.barra_navegacion{ 
+     background-color:transparent; 
+	 text-align:right; 
+	 border:0px; 
+	 margin:0px; 
+}
+
+
+
+/* ----------------------------------------------------- */		
+/* Seccion_BarraNavegacion - precarga de la imagen del logotipo
+ Ejemplos de su forma de uso:
+						 
+A) <div class="ImagenLogotipo"></div>
+B) <p style="text-align:center" class="ImagenLogotipo"></p>
+C) <span style="text-align:center" class="ImagenLogotipo"></span>
+ */		    
+.ImagenLogotipo
+{ 
+    display:  block;
+	background-image:url(http://jms32.eresmas.net/web2008/graficos/red/logo_gj01.gif) ;
+	background-repeat: no-repeat;
+	height:33px;
+	width:186px;
+	padding: 2px;
+    border:  2px;
+  	margin:  2px;
+	  /*background-color:yellow;		*/
+}
+
+
+
+/* id*/   
+#NavTop
+{
+	 width:auto;
+	 height:auto;
+	 margin:0;
+	/* background-color:yellow;*/
+}
+		
+#NavDerecha
+{
+	 float:right;
+	 width:186px;
+	 height:33px;
+	 margin-left:10px;
+	 padding:5px;
+	/* background-color:green;*/
+}		 			 
+
+#NavIzquierda
+{
+	 width:75%;
+	 height:auto;
+	 padding:5px;
+	 /*background-color:red;*/
+}		 
+
+
+
+
+/* ++++++++++++++++++++++++++++++++++++++  */
+/* Seccion_TituloDocumento*/
+.Seccion_TituloDocumento{}
+.titulo_documento
+{
+	width: auto;
+	font-weight: normal;
+	margin-top: 1cm;
+	margin-bottom: 0.5cm;
+	font-size: xx-large;
+	padding: 0.2em;
+	font-family: "Gill Sans" , "Century Gothic" , "Trebuchet MS" , "Bitstream Vera Sans" , verdana, lucida, arial, helvetica, sans-serif;
+}
+
+
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+/* Seccion_Sumario    */
+
+/*    .Seccion_Sumario{}   */
+
+/* Los mismos datos que h2 */
+.sumario_titulo{text-align:left; color: #005a9c; font: 140% sans-serif;}
+
+.sumario_contenido
+{
+	width: 95%;
+	background-color: #F3E8F3; /* #E7E7E7;  gris clarito */
+	font-family: verdana,arial, sans-serif;
+ 	padding: 0.5cm;
+	margin: 0cm;
+	margin-top: 0.5cm;
+	margin-bottom: 0.5cm;
+	text-align: justify; /* 	border-top-style: solid; 	border-top-color: black; 	border-top-width: 5px; 	border-bottom-style: solid; 	border-bottom-color: black; 	border-bottom-width: 5px; 	border-left-style: solid; 	border-left-color: #F3E8F3; 	border-left-width: 5px; 	border-right-style: solid; 	border-right-color: #F3E8F3; 	border-right-width: 5px; */
+}
+
+
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+/* Seccion_TablaDeContenidos    */
+
+.Seccion_TablaDeContenidos{}
+
+.toc_titulo{text-align: left;}
+
+.toccaja{
+	BORDER-RIGHT: medium none; 
+	BORDER-TOP: medium none; 
+	PADDING-BOTTOM: 3px; 
+	BORDER-LEFT: medium none; 
+	MARGIN-RIGHT: 5%; 
+	PADDING-TOP: 1px; 
+	BORDER-BOTTOM: medium none; 
+	BACKGROUND-COLOR: #EAEAFF
+}
+.tocline{text-indent: 0;}
+.tocxref{text-align: left;}
+
+
+
+
+
+
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+/* Seccion_TextoDelDocumento    */
+
+.Seccion_TextoDelDocumento{}
+
+
+
+/* cuadro verde letra verde*/
+.CuadroVerdeLetraVerde {
+	BORDER-RIGHT: green 2px solid; 
+	BORDER-TOP: green 2px solid; 
+	FONT-WEIGHT: bold; 
+	MARGIN-LEFT: 0px; 
+	BORDER-LEFT: green 2px solid; 
+	COLOR: green; 
+	MARGIN-RIGHT: 5%; 
+	BORDER-BOTTOM: green 2px solid;
+}
+
+/* cuadro rojo letra roja*/
+.CuadroRojoLetraRoja {
+	BORDER-RIGHT: red 2px solid; 
+	BORDER-TOP: red 2px solid; 
+	MARGIN-LEFT: 0px; 
+	BORDER-LEFT: red 2px solid; 
+	COLOR:red; 
+	MARGIN-RIGHT: 5%; 
+	BORDER-BOTTOM: red 2px solid;
+}
+
+.html_ejemplo{
+	FONT-WEIGHT: bold; 
+	MARGIN-LEFT: 10px; 
+	COLOR: maroon; 
+	MARGIN-RIGHT: 10px; 
+	FONT-FAMILY: monospace; 
+		margin-top: 0px;
+	margin-bottom: 0px
+}
+
+
+.nota_roja
+{
+	color: #B22222; /* firebrik (rojo oscuro) */
+	text-decoration: none;
+	font-family: 'Courier New' , monospace;
+}
+
+
+.nota_verde{color : green;}
+
+.fosforito_amarillo{background : yellow;}
+
+
+/*  Estilos  para las HR situadas antes del enlace subir             */ 
+.HrSubir {text-align: left; margin: 0px; width: 50%;}
+
+/* estilos para diferenciar una palabra marcada como clave */
+/* De momento copi el estilo de una marca roja*/
+.UnaPalabraClave{}
+
+
+
+address{border:0; margin:0;}
+/*address:after{ */
+/* \40 es un código para escribir el caracter '@' */ 
+/*content: " <jms32\40 eresmas.net>"; */
+/*} */
+
+samp{FONT-FAMILY: monospace;}
+var {FONT-FAMILY: monospace;}
+
+
+
+
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+/*  etiquetas y clases diversas    */
+
+
+pre
+{
+	background-color:#FBEDBB;
+	padding-right: 7pt; 
+	padding-left: 7pt;
+	padding-bottom: 7pt; 
+	padding-top: 7pt; 
+	font-family: "Courier New", Courier, mono;
+	font-size:9pt;
+	white-space: pre;
+	overflow:auto;
+}
+
+
+.pre_titulo
+{
+	color: #ffffff;
+	background-color: #006699;
+	font-weight: bold;
+	text-align: left;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+/* estilo que emplea el Javascript [expandirPre.js]*/
+/* estilo para expandir contraer pre */
+
+.expandirContraerCSS 
+{
+	font-family:'Arial helvetica'; 
+	color:#AA0000; 
+	font-weight:bold;
+	text-decoration: none;
+	font-size: smaller; 
+	border-bottom: #cccccc 1px solid; 
+	background-color: #fbedbb;
+	width:100%;
+	margin-bottom: 0px; 
+	margin-top: 0px;
+}
+
+
+code{
+  /* problemita, el codigo queda como mas pequeño, de esta forma se resalta*/
+       font-weight:bolder;  /* texto el siguiente punto de negrita  */
+       text-align: left;    /* justificacion Izquierda */
+       font-size:larger;    /* Aumentar el tamaño de la letra */
+       color: #990000;
+       font-family: "Courier New", Courier, mono;
+}
+
+
+/* Imagenes */
+.textoPieImagen
+{
+    font-weight:bolder;  /* texto el siguiente punto de negrita  */
+    font-size:smaller;	 /* disminuir el tamaño de la letra */
+    margin-left:2cm;     /* margen izquierdo metido 1 cm */
+    margin-right:2cm;    /* margen derecho   metido 1 cm */
+}
+
+
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+/* Seccion_Anexos    */
+
+
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+/* Seccion_Anexos_1_referencias    */
+
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+/* Seccion_Anexos_1_referencias    */
+
+
+.una_referencia{color: red}
+.llamada_referencia{color: green}
+
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+/* Seccion_Anexos_2_enlaces    */
+.Seccion_Anexos_2_Enlaces{}
+
+
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+/* Seccion_ListaDeEnlaces    */
+
+.Seccion_ListaDeEnlaces{}
+.EnlaceCaja {}
+.EnlaceLi {margin: 4px;}
+.EnlaceIndiceLocalLi {margin-top: 2px;}		
+.EnlaceIndiceGeneralLi {margin-top: 10px;}	
+
+
+
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+/* Seccion_Anexos_3_informacion_documento    */
+.Seccion_Anexos_3_informacion_documento{}
+.RefA3InformacionDocumento{}
+
+
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+/* Seccion_PieDePagina    */
+.Seccion_PieDePagina{}
+
+
+/* estilos viejos, a elimnar*/
+.PieDePagina_Tabla{
+    margin-top:1cm; 
+		border-top-style:solid ; 
+		border-top-color: black ; 
+		border-bottom-style: solid ; 
+		border-bottom-Color: black ; 
+		text-align: center ; 
+		font-family:'Courier New';
+}
+
+.PieDePagina_LineaCopyright
+{
+	  background-color: #00ff00;
+	  font-weight: bold;
+}
+
+
+
+/* estilos nuevos */
+
+.EstilosPieDePagina_Tabla
+{
+    margin-top:1cm; 
+		border-top-style:solid ; 
+		border-top-color: black ; 
+		border-bottom-style: solid ; 
+		border-bottom-Color: black ; 
+		text-align: center ; 
+		font-family:'Courier New';
+}
+
+
+.EstilosPieDePagina_LineaCopyright
+{
+	  background-color: #00ff00;
+	  font-weight: bold;
+}
+
+
+
+
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+/* Etiquetas de html */
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+
+
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+/* Clases para colorear codigos html (normalmnte inclidos en etiqueta PRE) */
+/* Los empleare en un futuro para colorear codigo */
+/* de momento se pueden modificar porque no se usan*/
+	
+.code-comment {
+	COLOR: #008000; FONT-STYLE: italic
+}
+.code-SummaryComment {
+	COLOR: #808080
+}
+.code-keyword {
+	COLOR: blue
+}
+.code-SDKkeyword {
+	COLOR: #339999
+}
+.code-preprocessor {
+	COLOR: navy
+}
+.code-string {
+	COLOR: purple
+}
+.code-literal {
+	COLOR: navy
+}
+.code-pagedirective {
+	BACKGROUND-COLOR: yellow
+}
+.code-attribute {
+	COLOR: red
+}
+.code-tag {
+	COLOR: #800000
+}
+.code-leadattribute {
+	COLOR: #800000
+}
+.code-digit {
+	COLOR: navy
+}
+.code-none {
+	COLOR: #000
+}	
+	
+
+
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+/* Etiquetas de MicroFormatos */
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
+/* Clases para colorear los microformatos */
+/* Los empleare en un futuro para colorear codigo */
+/* de momento se pueden modificar porque no se usan*/
+
+.vcard{}
+.fn{}
+.email{}
+.url{}
+
+.dublincore{}
+.title{}
+.creator{}
+.org{}
+.subject{}
+.abstract{}
+.tableOfContents{}
+.ArchivadoEn{}
+.Created{}
+.Issued{}
+.Modified{}
+.type{}
+.format{}
+.language{}
+.rights{}
+
+
+
+
+
+
+
+
+

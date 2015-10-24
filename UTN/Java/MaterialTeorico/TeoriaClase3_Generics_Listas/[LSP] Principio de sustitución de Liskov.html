@@ -1,0 +1,1335 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!-- saved from url=(0155)http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es-ES" xml:lang="es-ES"><head profile="http://dublincore.org/documents/dcq-html/"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>[LSP] Principio de sustitución de Liskov </title>
+<!-- ' -->
+<!-- ' -->
+<!--  **********************************************************  --> 
+<!--  **********************************************************  --> 
+<!--        Meta Datos DublinCore en el documento                 --> 
+<!--  Codificados segun el documento de fecha  2005-11-07         --> 
+<!--  http://dublincore.org/documents/2005/11/07/usageguide/      --> 
+<!--  http://dublincore.org/documents/2003/11/30/dcq-html/        --> 
+
+<!--  **********************************************************  --> 
+<!--  **********************************************************  --> 
+<!--       &#161; &#161; &#161; A T E N C I O N  ! ! !     (Importante)          --> 
+<!--  Para incluir estas etiquetas metas Dublin Core en un        --> 
+<!--  documento HTML (XHTML) hay que hacer dos cosas:             --> 
+<!--  1) Incluir en la etiqueta [HEAD], el atributo [PROFILE]     --> 
+<!--     con el siguiente valor:                                  --> 
+<!--     [profile = "http://dublincore.org/documents/dcq-html/"] -->
+<!--  2) Copiar y pegar TODO el texto de este documento           --> 
+
+<!--  **********************************************************  --> 
+<!--  **********************************************************  --> 
+<!-- Declaraciones de terminos DCMI representados en el           --> 
+<!-- lenguaje de esquema [schema] RDF                             --> 
+<!-- para poder usar DC. con otros esquemas                       --> 
+<!-- Codificados en: http://es.dublincore.org/schemas/rdfs/       --> 
+<!-- ' -->
+<!--  . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   --> 
+<!--  Esquema RDF para el DC Simple, version 2004-03-24           --> 
+<!--  Este schema define los terminos para el Dublin Core Simple  --> 
+<!--  (los 15 elementos originales).                              --> 
+<!--  Codificados en:  http://purl.org/dc/elements/1.1/           --> 
+
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+
+<!-- ' -->
+<!--  . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   --> 
+<!--  Matizaciones al DC, Esquemas [schemes] de codificacion      --> 
+<!--  y otros Esquemas [schema] RDF,  versi&#243;n 2004-03-24          --> 
+<!--  Este schema define los elementos de matizacion,             --> 
+<!--  esquemas [schemes] de codificacion y otros elementos.       --> 
+<!--  Codificados en: http://purl.org/dc/terms/                   --> 
+
+<link rel="schema.DCTERMS" href="http://purl.org/dc/terms/">
+
+<!-- ' -->
+<!--  . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   --> 
+<!--  Vocabulario DC Type, version 2004-03-24                     --> 
+<!--  Este schema define el vocabulario del elemento              --> 
+<!--  type de Dublin Core.                                        --> 
+<!--  Codificados en: http://purl.org/dc/dcmitype/                --> 
+
+<link rel="schema.dcmitype" href="http://purl.org/dc/dcmitype/">
+
+<!--  **********************************************************  --> 
+<!--  **********************************************************  --> 
+<!--        Meta Datos DublinCore                                 --> 
+<!--  **********************************************************  --> 
+
+<meta name="DC.title" content="[LSP] Principio de sustitución de Liskov">
+<meta name="DC.creator" content="
+     name=Joaquin Medina Serrano; 
+     web=http://joaquin.medina.name/; 
+     email=mailto:joaquin@medina.name; 
+     cia=jms32; 
+     comments=Programador senior francamente bueno :-P">
+<meta name="DC.subject" content="abstracción, &#39;contratos de diseño&#39;, &#39;diseño por contrato&#39;, herencia, Liskov, &#39;Liskov Substitution Principle&#39;, LSP, polimorfismo, post-condiciones, pre-condiciones, &#39;Principio de Sustitución de Liskov&#39;">
+<meta name="DCTERMS.abstract" content="Principios del diseño orientado a objetos; Principios SOLID; [LSP] Principio de sustitución de Liskov&lt;br /&gt;
+Básicamente lo que nos dice este principio es que &#39;Cada clase que hereda de otra puede usarse como su padre sin necesidad de conocer las diferencias entre ellas&#39;.">
+<meta name="DCTERMS.tableOfContents" content="[        [LSP] Principio de sustitución de Liskov
+
+    ], [        Los cinco principios SOLID
+    ], [        SOLID – LSP – Liskov Substitution Principe
+    ], [        Ejemplo que NO cumple con el principio
+    ], [        Ejemplo que SI cumple el principio
+    ], [        Un apunte sobre el diseño de objetos basado en contratos
+    ], [        Un Ejemplo que NO cumple el principio LSP
+    ], [        Sub-tipos vs Sub-clases y Diseño por Contrato
+    ], [        
+LSP y las interfaces
+    ], [        Otro Ejemplo que NO cumple el principio LSP
+    ], [        Resumiendo 
+    ], [        Referencia Bibliográfica
+    ]">
+<meta name="DCTERMS.created" scheme="DCTERMS.W3C-DTF" content="2012-09-14T09:54:12">
+<meta name="DCTERMS.issued" scheme="DCTERMS.W3C-DTF" content="2012-09-14T09:54:12">
+<meta name="DCTERMS.modified" scheme="DCTERMS.W3C-DTF" content="2012-09-14T09:54:12">
+<meta name="DC.type" scheme="DCTERMS.DCMI_Type_Vocabulary" content="Text">
+<meta name="DC.format" scheme="DCTERMS.IMT" content="text/xhtml+xml">
+<meta name="DCTERMS.extent" content="000 Kb">
+<meta name="DCTERMS.medium" scheme="DCTERMS.RFC_2616" content="UTF-8">
+<meta name="DC.language" scheme="DCTERMS.RFC1766" content="es-ES">
+<meta name="DC.rights" content="© Copyright Joaquin &#39;jms32®&#39; Medina Serrano 1.997-2012 - Reservados todos los derechos.">
+<!-- ' -->
+<!-- ***************************************  -->
+<!-- Contenido del documento  -->
+<!-- ***************************************  -->
+<meta name="Title" content="[LSP] Principio de sustitución de Liskov">
+<meta name="Keywords" content="abstracción, &#39;contratos de diseño&#39;, &#39;diseño por contrato&#39;, herencia, Liskov, &#39;Liskov Substitution Principle&#39;, LSP, polimorfismo, post-condiciones, pre-condiciones, &#39;Principio de Sustitución de Liskov&#39;">
+<meta name="Description" content="Principios del diseño orientado a objetos; Principios SOLID; [LSP] Principio de sustitución de Liskov&lt;br /&gt;
+Básicamente lo que nos dice este principio es que &#39;Cada clase que hereda de otra puede usarse como su padre sin necesidad de conocer las diferencias entre ellas&#39;.">
+<meta name="Contents" content="[        [LSP] Principio de sustitución de Liskov
+
+    ], [        Los cinco principios SOLID
+    ], [        SOLID – LSP – Liskov Substitution Principe
+    ], [        Ejemplo que NO cumple con el principio
+    ], [        Ejemplo que SI cumple el principio
+    ], [        Un apunte sobre el diseño de objetos basado en contratos
+    ], [        Un Ejemplo que NO cumple el principio LSP
+    ], [        Sub-tipos vs Sub-clases y Diseño por Contrato
+    ], [        
+LSP y las interfaces
+    ], [        Otro Ejemplo que NO cumple el principio LSP
+    ], [        Resumiendo 
+    ], [        Referencia Bibliográfica
+    ]">
+
+<!-- ' -->
+<!-- ***************************************  -->
+<!-- Propiedad Intelectual  -->
+<!-- ***************************************  -->
+<meta name="author" content="
+     name=Joaquin Medina Serrano; 
+     web=http://joaquin.medina.name/; 
+     email=mailto:joaquin@medina.name; 
+     cia=jms32; 
+     comments=Programador senior francamente bueno :-P">
+<meta name="Copyright" content="© Copyright Joaquin &#39;jms32®&#39; Medina Serrano 1.997-2012 - Reservados todos los derechos.">
+
+<!-- ' -->
+<!-- ***************************************  -->
+<!-- Informacion sobre el documento  -->
+<!-- ***************************************  -->
+<meta http-equiv="Date.Created" scheme="ISO 8601" content="2012-09-14T09:54:12">
+<meta http-equiv="Date.Issued" scheme="ISO 8601" content="2012-09-14T09:54:12">
+<meta http-equiv="Content-Language" scheme="RFC 1766" content="es-ES">
+
+<meta name="Generator" content="UC_Metadatos.2009.5.17">
+<link rel="Index" href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/__OopIndiceDocs.html" title="Documento indice local">
+<link rel="Chapter" href="http://jms32.eresmas.net/web2008/indicesAnuales/todos/todos_Links_AnualSencillo.html" title="Documento índice general del año 2012">
+<link rel="Start" href="http://joaquin.medina.name/" title="Documento Home">
+<link type="image/x-icon" href="http://jms32.eresmas.net/web2008/graficos/red/fabIcon2007.ico" rel="shortcut icon">
+<link type="image/x-icon" href="http://jms32.eresmas.net/web2008/graficos/red/fabIcon2007.ico" rel="icon">
+
+<!-- '''''''''''''' ESTILOS CSS ''''''''''''''' -->
+<meta http-equiv="Content-Script-Style" content="text/css">
+<link media="all" rel="stylesheet" type="text/css" href="./[LSP] Principio de sustitución de Liskov_files/2008.css">
+<style type="text/css" media="all">
+/*<![CDATA[*/
+/* ................................................................  */
+/*  A modo de EJEMPLO para ilustrar la forma de incluir un estilo    */
+/* ................................................................  */
+/*  Estilos  para las HR situadas antes del enlace subir             */ 
+.HrSubir {text-align: left; margin: 0px; width: 50%;}
+/* ................................................................  */
+/* FORMA DE USO */
+/*  <hr class="HrSubir" />  */
+/* ................................................................  */
+/*]]>*/ 
+</style>
+
+<!-- ''''''''''''''' JavaScript ''''''''''''''' -->
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<script type="text/javascript">
+//<![CDATA[
+
+// ................................................................
+// A modo de EJEMPLO para ilustrar la forma de incluir una funcion 
+// ................................................................
+    function imprimirPagina() {
+       If (window.print)
+           window.print(); 
+        Else
+           alert(" Lo siento, pero a tu navegador no se le puede ordenar imprimir " +
+                 " desde la web. Actualizate o hazlo desde los men&#250;s" )
+    }
+// ................................................................
+// FORMA DE USO
+// <a href="javascript:imprimirPagina()"> mandar imprimir esta pagina<\/a> 
+// ................................................................
+
+  //]]> 
+</script>
+</head>
+<!-- ====================== -->
+<!-- ====================== -->
+<!-- ====================== -->
+
+<body xml:lang="es-ES" id="Seccion_InicioDocumento">
+
+
+
+<!-- ==================================  -->
+<!--   La barra de navegacion superior   -->
+<!-- ==================================  -->
+<div id="Seccion_BarraNavegacion" class="barra_navegacion">
+<!-- NavDerecha  -->
+<div id="NavDerecha" class="ImagenLogotipo"></div><!-- FIN id='NavDerecha'  -->
+<!-- Cerrando Etiqueta DIV -->
+</div>
+<!-- ==================================  -->
+<!--   /FIN barra de navegacion          -->
+<!-- ==================================  -->
+
+
+
+
+<!-- ==================================  -->
+<!--         TITULO del documento        -->
+<!-- ==================================  -->
+<div id="Seccion_TituloDocumento" style="margin-top:1cm;">
+     <h1 class="titulo_documento">
+    [LSP] Principio de sustitución de Liskov
+    </h1>
+<!-- Cerrando Etiqueta DIV -->
+</div>
+<!-- ==================================  -->
+<!--   / FIN   TITULO del documento      -->
+<!-- ==================================  -->
+
+
+
+
+<!-- ==================================  -->
+<!--        SUMARIO del documento        -->
+<!-- ==================================  -->
+<div id="Seccion_Sumario" style="margin-top:1cm;">
+     <h2 class="sumario_titulo">
+    Descripción general 
+    </h2>
+    <p id="Seccion_Sumario_Contenido" class="sumario_contenido">
+    Principios del diseño orientado a objetos; Principios SOLID; [LSP] Principio de sustitución de Liskov<br>
+Básicamente lo que nos dice este principio es que 'Cada clase que hereda de otra puede usarse como su padre sin necesidad de conocer las diferencias entre ellas'.
+    </p>
+<!-- Cerrando Etiqueta DIV -->
+</div>
+<!-- ==================================  -->
+<!--   / FIN  SUMARIO del documento      -->
+<!-- ==================================  -->
+
+
+
+<!-- =======================  -->
+<!--        CONTENIDOS        -->
+<!-- =======================  -->
+<div id="Seccion_TablaDeContenidos">
+      <!-- Separacion superior de 1 cm con el elemento anterior(padding-top: 1cm) -->  
+      <h2 class="toc_titulo" style="padding-top: 1cm;">[TOC] Tabla de Contenidos</h2>
+      <!-- Comienza la lista (toc) --> 
+   <ul class="toccaja">
+      <li class="tocline"><a class="tocxref" href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#Refh1_LSP_Principio_De_Sustitucion_De_Liskov">        [LSP] Principio de sustitución de Liskov
+
+    </a>
+         <ul>
+         <li class="tocline"><a class="tocxref" href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#Refh2_Los_Cinco_Principios_SOLID">        Los cinco principios SOLID
+    </a></li>
+         <li class="tocline"><a class="tocxref" href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#Refh2_SOLID_LSP_Liskov_Substitution_Principe">        SOLID – LSP – Liskov Substitution Principe
+    </a></li>
+         <li class="tocline"><a class="tocxref" href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#Refh2_Ejemplo_Que_NO_Cumple_Con_El_Principio">        Ejemplo que NO cumple con el principio
+    </a></li>
+         <li class="tocline"><a class="tocxref" href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#Refh2_Ejemplo_Que_SI_Cumple_El_Principio">        Ejemplo que SI cumple el principio
+    </a></li>
+         <li class="tocline"><a class="tocxref" href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#Refh2_Un_Apunte_Sobre_El_Disenyo_De_Objetos_Basado_En_Contratos">        Un apunte sobre el diseño de objetos basado en contratos
+    </a>
+            <ul>
+            <li class="tocline"><a class="tocxref" href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#Refh3_Un_Ejemplo_Que_NO_Cumple_El_Principio_LSP">        Un Ejemplo que NO cumple el principio LSP
+    </a>
+               <ul>
+               <li class="tocline"><a class="tocxref" href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#Refh4_Sub_tipos_Vs_Sub_clases_Y_Disenyo_Por_Contrato">        Sub-tipos vs Sub-clases y Diseño por Contrato
+    </a></li>
+               </ul>
+            </li>
+            <li class="tocline"><a class="tocxref" href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#Refh3_LSP_Y_Las_Interfaces">        
+LSP y las interfaces
+    </a></li>
+            <li class="tocline"><a class="tocxref" href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#Refh3_Otro_Ejemplo_Que_NO_Cumple_El_Principio_LSP">        Otro Ejemplo que NO cumple el principio LSP
+    </a></li>
+            </ul>
+         </li>
+         <li class="tocline"><a class="tocxref" href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#Refh2_Resumiendo">        Resumiendo 
+    </a></li>
+         <li class="tocline"><a class="tocxref" href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#Refh2_Referencia_Bibliografica">        Referencia Bibliográfica
+    </a>         </li>
+         </ul>
+      </li>
+</ul>
+</div>
+<!-- Termina la seccion Tabla de contenidos  -->
+
+
+<!-- ' -->
+<!-- ==================================  -->
+<!--         CUERPO DEL DOCUMENTO        -->
+<!-- ==================================  -->
+<!--    Abriendo la Etiqueta DIV         -->
+<div id="Seccion_TextoDelDocumento">
+<!-- ' -->
+<!-- ************************************* Una Marca (h1)*** -->
+<hr class="HrSubir" style="margin-top:1cm;">
+<p style="text-align: right; margin: 0px;">      <a href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#Seccion_InicioDocumento" title="Ir a la parte superior de la página" onmouseover="window.status=&#39;Ir a la parte superior de la página&#39;; return true" onmouseout="window.status=&#39;&#39;; return true">           ↑↑↑
+      </a>
+   </p>
+<h1 id="Refh1_LSP_Principio_De_Sustitucion_De_Liskov" style="margin-top:0cm;">        [LSP] Principio de sustitución de Liskov
+
+    </h1>
+<!-- ************************************* Una Marca (h2)*** -->
+<hr class="HrSubir" style="margin-top:1cm;">
+<p style="text-align: right; margin: 0px;">      <a href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#Seccion_InicioDocumento" title="Ir a la parte superior de la página" onmouseover="window.status=&#39;Ir a la parte superior de la página&#39;; return true" onmouseout="window.status=&#39;&#39;; return true">           ↑↑↑
+      </a>
+   </p>
+<h2 id="Refh2_Los_Cinco_Principios_SOLID" style="margin-top:0cm;">        Los cinco principios SOLID
+    </h2>
+    <ul>
+        <li><a href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_SRP/2012_09_04_SOLID_SRP_PrincipioResponsabilidadUnica.htm" title="Cada objeto en el sistema deben tener una simple responsabilidad, y todos los servicios de los objetos deben cumplir con esa simple responsabilidad">
+            Principio de Responsabilidad Única </a>(SRP – Single Responsibility Principle)
+        </li>
+        <li><a href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_OCP/2012_09_04_SOLID_PrincipioAbiertoCerrado.html" title="las entidades de software (clases, módulos, funciones…) deben estar abiertas para extenderse, pero cerradas para modificación.">
+            Principio Abierto-Cerrado </a>(OCP – Open Closed Principle) </li>
+        <li><span class="fosforito_amarillo">Principio de Sustitución de Liskov </span> (LSP - Liskov Substitution Principle)
+        </li>
+        <li><a href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_ISP/2012_09_14_ISP_InterfaceSegregationPrincipe.html" title="las clases que implementen una interfaz o una clase abstracta no deberían estar obligadas a utilizar partes que no van a utilizar">
+            Principio de Segregación de Interfaces </a>(ISP - Interface Segregation Principle)
+        </li>
+        <li><a href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_DIP/2012_09_14_DependencyInversionPrincipe.html" title="A). Las clases de alto nivel no deberían depender de las clases de bajo nivel. Ambas deberían depender de las abstracciones y B). Las abstracciones no deberían depender de los detalles. Los detalles deberían depender de las abstracciones.">
+            Principio de Inversión de Dependencia </a>(DIP – Dependency Inversion
+            Principle) </li>
+    </ul>
+
+   
+
+
+
+
+
+<!-- ************************************* Una Marca (h2)*** -->
+<p>
+   
+</p>
+<hr class="HrSubir" style="margin-top:1cm;">
+<p style="text-align: right; margin: 0px;">      <a href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#Seccion_InicioDocumento" title="Ir a la parte superior de la página" onmouseover="window.status=&#39;Ir a la parte superior de la página&#39;; return true" onmouseout="window.status=&#39;&#39;; return true">           ↑↑↑
+      </a>
+   </p>
+<h2 id="Refh2_SOLID_LSP_Liskov_Substitution_Principe" style="margin-top:0cm;">        SOLID – LSP – Liskov Substitution Principe
+    </h2>
+<p>
+El <span class="UnaPalabraClave">Principio de Sustitución de Liskov</span> fue acuñado por Bárbara <span class="UnaPalabraClave">Liskov</span> (de ahí el nombre del principio) en el año 1987 durante una conferencia sobre Jerarquía y Abstracción de datos. Su principal cometido es la de asegurar en la herencia entre clases de la Programación Orientada a Objetos que una clase derivada no únicamente es sino que debe comportarse como la clase base. Su definición es:
+</p>
+<p>
+"Debe ser posible utilizar cualquier objeto instancia de una subclase en lugar de cualquier objeto instancia de su superclase sin que la semántica del programa escrito en los términos de la superclase se vea afectado"
+</p>
+<p>
+Hay muchas más definiciones de este principio
+</p>
+<ul><li>
+Cada clase que hereda de otra puede usarse como su padre sin necesidad de conocer las diferencias entre ellas
+</li>
+
+<li>
+Toda subclase debe soportar ser sustituida por su clase base lo que en términos de contratos significa que las precondiciones de los métodos de la subclase no serán más fuertes que las de la clase base, y sus pos condiciones no serán más débiles (en el lenguaje de la calle: los métodos derivados no deben esperar más ni proveer menos que los originales).
+</li>
+
+<li>
+Las funciones que usan punteros o referencias a clases base deben ser capaces de utilizar objetos de las clases derivadas sin tener conocimiento de ello" (Martin96b), también: "Las clases derivadas deben ser utilizables a través de la interfaz de la clase base, sin necesidad de que el usuario conozca la diferencia
+</li>
+
+<li>
+Si por cada objeto O1 del tipo S existe un objeto O2 del tipo T tal que para todos los programas P definidos en términos de T y el comportamiento de P permanece invariable cuando O1 es sustituido por O2, entonces S es un subtipo de T.
+</li></ul>
+<p>
+<span style="font-size:larger ; font-weight:bold;">Idea importante</span>
+</p>
+<p>
+En lenguajes OO como C# o VB.NET, la clave para conseguir la<span class="UnaPalabraClave"> abstracción</span> y <span class="UnaPalabraClave">polimorfismo</span> de entidades es mediante la <span class="UnaPalabraClave">herencia</span>, y es precisamente en esta característica en la que se basa el Principio de Sustitución de Liskov (<span class="UnaPalabraClave">Liskov Substitution Principle</span>, <span class="UnaPalabraClave">LSP</span>). El principio indica cuáles son los fundamentos básicos de diseño que debe seguir la herencia en un caso particular, o cuál es la mejor forma de crear jerarquías de herencia entre clases. Porque el hecho de que una clase herede de otra, no asegura que se cumple el principio LSP, si no se respetan también sus "<span class="UnaPalabraClave">contratos de diseño</span>"
+</p>
+<!-- ************************************* Una Marca (h2)*** -->
+<hr class="HrSubir" style="margin-top:1cm;">
+<p style="text-align: right; margin: 0px;">      <a href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#Seccion_InicioDocumento" title="Ir a la parte superior de la página" onmouseover="window.status=&#39;Ir a la parte superior de la página&#39;; return true" onmouseout="window.status=&#39;&#39;; return true">           ↑↑↑
+      </a>
+   </p>
+<h2 id="Refh2_Ejemplo_Que_NO_Cumple_Con_El_Principio" style="margin-top:0cm;">        Ejemplo que NO cumple con el principio
+    </h2>
+<p>
+Echemos un vistazo al código siguiente. Este código trata de calcular los impuestos de un vehículo en base a la matricula (antigüedad) y la cilindrada del mismo.
+</p>
+<pre><p class="pre_titulo">
+Listado 1
+</p>
+<span style="color:#0000FF">class</span> Vehiculo
+{
+    <span style="color:#0000FF">public</span> <span style="color:#0000FF">string</span> Marca { <span style="color:#0000FF">get</span>; <span style="color:#0000FF">set</span>; }
+    <span style="color:#0000FF">public</span> <span style="color:#0000FF">string</span> Modelo { <span style="color:#0000FF">get</span>; <span style="color:#0000FF">set</span>; }
+    <span style="color:#0000FF">public</span> <span style="color:#0000FF">int</span> Cilindrada { <span style="color:#0000FF">get</span>; <span style="color:#0000FF">set</span>; }
+}
+ 
+<span style="color:#0000FF">class</span> Ciclomotor : Vehiculo
+{
+    <span style="color:#0000FF">public</span> <span style="color:#0000FF">string</span> ObtenerNumLicencia()
+    {
+        <span style="color:#008000">// Devuelve número de licencia</span>
+    }
+}
+ 
+<span style="color:#0000FF">class</span> Coche : Vehiculo
+{
+    <span style="color:#0000FF">public</span> <span style="color:#0000FF">string</span> ObtenerMatricula()
+    {
+        <span style="color:#008000">// Devuelve matrícula</span>
+    }
+}
+ 
+<span style="color:#0000FF">class</span> Impuestos
+{
+    <span style="color:#0000FF">public</span> <span style="color:#0000FF">void</span> CalcularImpuesto(Vehiculo vehiculo)
+    {
+        <span style="color:#0000FF">string</span> matricula = ((Coche)vehiculo).ObtenerMatricula();
+        ServicioCalculoImpuestos(matricula, vehiculo.Cilindrada);
+    }
+}
+</pre>
+<!-- ' -->
+<!-- Una Imagen Empieza -->
+<div style="text-align:center;"><img src="./[LSP] Principio de sustitución de Liskov_files/image001.png" alt="Figura 1" title="Figura 1" height="220" width="407" style="border-width:0px;">
+<p class="textoPieImagen">
+Figura 1
+</p></div>
+<!-- /Una Imagen Termina -->
+<p>
+Básicamente, LSP afirma que si tenemos dos objetos de tipos diferentes –Coche y Ciclomotor– que derivan de una misma clase base –Vehículo–, deberíamos poder reemplazar cada uno de los tipos –Coche/Ciclomotor y viceversa– allí dónde el tipo base –Vehículo– esté implementado. En el ejemplo anterior tenemos un claro caso de violación del LSP, ya que la ejecución del método CalcularImpuesto generará una excepción de conversión de tipo si el objeto pasado por parámetro es de tipo Ciclomotor en lugar de Coche, pese a que ambas clases derivan de la misma clase base Vehículo.
+</p>
+<p>
+Podríamos pensar en solucionar el problema modificando el código tal y como se muestra a continuación:
+</p>
+<pre><p class="pre_titulo">
+Listado 2
+</p>
+<span style="color:#0000FF">public</span> <span style="color:#0000FF">void</span> CalcularImpuesto(Vehiculo vehiculo)
+{
+    <span style="color:#0000FF">string</span> matricula = <span style="color:#0000FF">string</span>.Empty;
+    <span style="color:#0000FF">if</span> (vehiculo.<span style="color:#0000FF">GetType</span>().Name == <span style="color:#B22222">"Coche"</span>)
+        matricula = ((Coche)vehiculo).ObtenerMatricula();
+    <span style="color:#0000FF">else</span> <span style="color:#0000FF">if</span> (vehiculo.<span style="color:#0000FF">GetType</span>().Name == <span style="color:#B22222">"Ciclomotor"</span>)
+        matricula = ((Ciclomotor)vehiculo).ObtenerNumLicencia();
+    ServicioCalculoImpuestos(matricula, vehiculo.Cilindrada);
+}
+</pre>
+<p>
+Pese a que el compilador no genere ninguna excepción de conversión de tipo, esta clase aún viola el LSP. Esto es debido a que estamos forzando a un objeto Vehículo pasado como parámetro a comportarse como Ciclomotor o Coche. Además, esta aproximación vulnera el Principio Open/Closed, ya que ante cualquier nueva entidad que derive de Vehiculo deberemos modificar el método CalcularImpuesto.
+</p>
+<!-- ************************************* Una Marca (h2)*** -->
+<hr class="HrSubir" style="margin-top:1cm;">
+<p style="text-align: right; margin: 0px;">      <a href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#Seccion_InicioDocumento" title="Ir a la parte superior de la página" onmouseover="window.status=&#39;Ir a la parte superior de la página&#39;; return true" onmouseout="window.status=&#39;&#39;; return true">           ↑↑↑
+      </a>
+   </p>
+<h2 id="Refh2_Ejemplo_Que_SI_Cumple_El_Principio" style="margin-top:0cm;">        Ejemplo que SI cumple el principio
+    </h2>
+<p>
+Vamos a ver en este ejemplo el diseño de una calculadora siguiendo el principio LSP:
+</p>
+<p>
+LSP es básicamente una extensión del principio abierto-cerrado. Lo que nos dice es que si tenemos una clase y varias subclases de esta al usar una referencia a la clase principal esta debe ser capaz de aceptar cualquier objeto de sus clases hijas.
+</p>
+<!-- ' -->
+<!-- Una Imagen Empieza -->
+<div style="text-align:center;"><img src="./[LSP] Principio de sustitución de Liskov_files/image002.png" alt="Figura 2" title="Figura 2" height="389" width="552" style="border-width:0px;">
+<p class="textoPieImagen">
+Figura 2
+</p></div>
+<!-- /Una Imagen Termina -->
+<pre><p class="pre_titulo">
+Listado 2
+</p>
+<span style="color:#008000">// Tenemos una clase base</span>
+<span style="color:#0000FF">public</span> <span style="color:#0000FF">abstract</span> <span style="color:#0000FF">class</span> Operacion
+ {
+     <span style="color:#0000FF">public</span> <span style="color:#0000FF">double</span> OperadorUno { <span style="color:#0000FF">get</span>; <span style="color:#0000FF">set</span>; }
+     <span style="color:#0000FF">public</span> <span style="color:#0000FF">double</span> OperadorDos { <span style="color:#0000FF">get</span>; <span style="color:#0000FF">set</span>; }
+ 
+     <span style="color:#0000FF">public</span> <span style="color:#0000FF">abstract</span> <span style="color:#0000FF">double</span> Calcular();
+ }
+    
+ 
+ <span style="color:#008000">// Una clase derivada de Operacion</span>
+ <span style="color:#0000FF">public</span> <span style="color:#0000FF">class</span> OperacionSumar : Operacion
+ {
+     <span style="color:#0000FF">public</span> <span style="color:#0000FF">override</span> <span style="color:#0000FF">double</span> Calcular()
+     {
+         <span style="color:#0000FF">double</span> result = <span style="color:#0000FF">this</span>.OperadorUno + <span style="color:#0000FF">this</span>.OperadorDos;
+         <span style="color:#0000FF">return</span> result;
+     }
+ }
+ 
+
+ <span style="color:#008000">//Otra clase derivada de Operación</span>
+ <span style="color:#0000FF">public</span> <span style="color:#0000FF">class</span> OperacionMultiplicar : Operacion
+ {
+     <span style="color:#0000FF">public</span> <span style="color:#0000FF">override</span> <span style="color:#0000FF">double</span> Calcular()
+     {
+         <span style="color:#0000FF">double</span> result = <span style="color:#0000FF">this</span>.OperadorUno * <span style="color:#0000FF">this</span>.OperadorDos;
+         <span style="color:#0000FF">return</span> result;
+     }
+ }
+ 
+
+ <span style="color:#0000FF">public</span> <span style="color:#0000FF">class</span> Calculadora
+ {
+     <span style="color:#008000">//Aquí pasamos una referencia de la clase base</span>
+     <span style="color:#0000FF">public</span> <span style="color:#0000FF">void</span> Calcular(Operacion op)
+     {
+         <span style="color:#008000">//Esa referencia la usamos aquí que es op</span>
+         <span style="color:#0000FF">double</span> result = op.Calcular();
+         Console.WriteLine(<span style="color:#B22222">"Resultado="</span> + result);
+     }
+ }
+ 
+
+ <span style="color:#0000FF">public</span> <span style="color:#0000FF">class</span> Main
+ {
+     <span style="color:#0000FF">public</span> <span style="color:#0000FF">static</span> <span style="color:#0000FF">void</span> main(<span style="color:#0000FF">String</span>[] args)
+     {
+         Calculadora calc = <span style="color:#0000FF">new</span> Calculadora();
+ 
+         OperacionSumar suma = <span style="color:#0000FF">new</span> OperacionSumar();
+         suma.OperadorUno=10;
+         suma.OperadorDos=4;
+         <span style="color:#008000">//El metodo calcular acepta cualquier objeto</span>
+         <span style="color:#008000">//de una clase derivada de Operación</span>
+         calc.Calcular(suma);
+ 
+         OperacionMultiplicar multiplicacion = <span style="color:#0000FF">new</span> OperacionMultiplicar();
+         multiplicacion.OperadorUno=6;
+         multiplicacion.OperadorDos=5;
+         <span style="color:#008000">//El método calcular acepta cualquier objeto</span>
+         <span style="color:#008000">//de una clase derivada de Operación</span>
+         calc.Calcular(multiplicacion);
+     }
+ }
+ </pre>
+<p>
+Aquí vemos la aplicación de este principio en el método calcular. Este método usa una referencia a la clase base y nunca se entera cual es el objeto derivado (subtipo) que se está usando.
+</p>
+<!-- ************************************* Una Marca (h2)*** -->
+<hr class="HrSubir" style="margin-top:1cm;">
+<p style="text-align: right; margin: 0px;">      <a href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#Seccion_InicioDocumento" title="Ir a la parte superior de la página" onmouseover="window.status=&#39;Ir a la parte superior de la página&#39;; return true" onmouseout="window.status=&#39;&#39;; return true">           ↑↑↑
+      </a>
+   </p>
+<h2 id="Refh2_Un_Apunte_Sobre_El_Disenyo_De_Objetos_Basado_En_Contratos" style="margin-top:0cm;">        Un apunte sobre el diseño de objetos basado en contratos
+    </h2>
+<p>
+Existe una fuerte relación entre el LSP y el concepto de <span class="UnaPalabraClave">diseño por contrato</span>, usando este último los métodos de una clase declaran <span class="UnaPalabraClave">pre-condiciones</span> y <span class="UnaPalabraClave">post-condiciones</span>. Las primeras deben ser verdaderas para que el método se ejecute. Una vez terminado, el método garantiza que las post-condiciones sean ciertas. Usando LSP, la pre-condición se traduce a que cualquier clase derivada debe aceptar cualquier cosa que la clase base puede aceptar, mientras la post-condición se traduce a que las clases derivadas deben ajustarse a todas la post-condiciones de la clase base. Es decir, sus comportamientos y los resultados no deben infringir ninguna de las limitaciones establecidas para la clase base. Los usuarios de la clase base no debe confundirse ante una nueva clase derivada.
+</p>
+<p>
+Por tanto, se deben tener dos criterios para usar clases bases, uno es dar a una aplicación un comportamiento común, y el otro usar métodos de ayuda para las clases derivadas. Pero sobre todo lo primero. Por ejemplo, puedo crear un formulario base porque quiero que todos los formularios tengan el mismo comportamiento frente a un evento concreto, pero también lo puedo hacer para tener funciones de ayuda. Siempre es preferible el primer criterio porque el segundo criterio lo puedo aislar luego en una clase de ayuda de simple instancia y llevármelo a otro proyecto.
+</p>
+<!-- ************************************* Una Marca (h3)*** -->
+<hr class="HrSubir" style="margin-top:1cm;">
+<p style="text-align: right; margin: 0px;">      <a href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#Seccion_InicioDocumento" title="Ir a la parte superior de la página" onmouseover="window.status=&#39;Ir a la parte superior de la página&#39;; return true" onmouseout="window.status=&#39;&#39;; return true">           ↑↑↑
+      </a>
+   </p>
+<h3 id="Refh3_Un_Ejemplo_Que_NO_Cumple_El_Principio_LSP" style="margin-top:0cm;">        Un Ejemplo que NO cumple el principio LSP
+    </h3>
+<p>
+Vamos a ver el típico ejemplo de libro de texto: el caso del cuadrado y el rectángulo, en el que mostraremos que el que una clase herede de otra, no asegura que se cumple el principio LSP, si no se respetan también sus "contratos de diseño"
+</p>
+<p>
+Supongamos que tenemos una clase Rectángulo como la siguiente:
+</p>
+<pre><p class="pre_titulo">
+Listado 3
+</p>
+<span style="color:#0000FF">public</span> <span style="color:#0000FF">class</span> Rectangulo
+{
+    <span style="color:#008000">//-----------------------------------------------------</span>
+    <span style="color:#008000">//La palabra clave virtual se utiliza para modificar un </span>
+    <span style="color:#008000">//método, de forma que pueda ser invalidado (sobre escrito)</span>
+    <span style="color:#008000">//en una clase derivada. </span>
+    <span style="color:#008000">//-----------------------------------------------------</span>
+    <span style="color:#0000FF">public</span> <span style="color:#0000FF">virtual</span> <span style="color:#0000FF">int</span> Ancho { <span style="color:#0000FF">get</span>; <span style="color:#0000FF">set</span>; }
+    <span style="color:#0000FF">public</span> <span style="color:#0000FF">virtual</span> <span style="color:#0000FF">int</span> Alto { <span style="color:#0000FF">get</span>; <span style="color:#0000FF">set</span>; }
+    <span style="color:#0000FF">public</span> <span style="color:#0000FF">virtual</span> <span style="color:#0000FF">float</span> Area()
+    {
+        <span style="color:#0000FF">return</span> Ancho * Alto;
+    }
+             
+}
+</pre>
+<p>
+Luego decidimos que un Cuadrado <span style="font-weight:bold;">"es-un"</span> rectángulo y por eso creamos la clase Cuadrado como una subclase de Rectángulo, y para asegurarnos que la forma realmente sea la de un cuadrado, las propiedades Alto y Ancho, las sobre escribimos  de forma que nos aseguremos de que, tal y como corresponde a un cuadrado, el valor del ancho y del alto sean iguales
+</p>
+<pre><p class="pre_titulo">
+Listado 4
+</p>
+<span style="color:#0000FF">public</span> <span style="color:#0000FF">class</span> Cuadrado : Rectangulo
+  {
+      <span style="color:#0000FF">public</span> <span style="color:#0000FF">override</span> <span style="color:#0000FF">int</span> Ancho
+      {
+          <span style="color:#0000FF">get</span>
+          {
+              <span style="color:#0000FF">return</span> <span style="color:#0000FF">base</span>.Ancho;
+          }
+          <span style="color:#0000FF">set</span>
+          {
+              <span style="color:#0000FF">base</span>.Ancho = <span style="color:#0000FF">value</span>;
+              <span style="color:#0000FF">base</span>.Alto = <span style="color:#0000FF">value</span>;
+          }
+      }
+
+      <span style="color:#0000FF">public</span> <span style="color:#0000FF">override</span> <span style="color:#0000FF">int</span> Alto
+      {
+          <span style="color:#0000FF">get</span>
+          {
+              <span style="color:#0000FF">return</span> <span style="color:#0000FF">base</span>.Alto;
+          }
+          <span style="color:#0000FF">set</span>
+          {
+              <span style="color:#0000FF">base</span>.Ancho = <span style="color:#0000FF">value</span>;
+              <span style="color:#0000FF">base</span>.Alto = <span style="color:#0000FF">value</span>;
+          }
+      }
+
+      <span style="color:#0000FF">public</span> <span style="color:#0000FF">override</span> <span style="color:#0000FF">float</span> Area()
+      {
+          <span style="color:#0000FF">return</span> Ancho * Alto;
+      }
+  }
+  </pre>
+<!-- ' -->
+<!-- Una Imagen Empieza -->
+<div style="text-align:center;"><img src="./[LSP] Principio de sustitución de Liskov_files/image003.png" alt="Figura 3" title="Figura 3" height="205" width="388" style="border-width:0px;">
+<p class="textoPieImagen">
+Figura 3
+</p></div>
+<!-- /Una Imagen Termina -->
+<p>
+Hasta aquí todo parece correcto, pero veamos qué pasa cuando tenemos una tercera clase, en este caso un test unitario, con el siguiente código:
+</p>
+<pre><p class="pre_titulo">
+Listado 5
+</p>
+<span style="color:#0000FF">public</span> <span style="color:#0000FF">class</span> Test 
+{ 
+      
+    <span style="color:#0000FF">public</span> <span style="color:#0000FF">void</span> TestCalculoAreaRectangulo() 
+    { 
+        testAreaFiguraRectangular( <span style="color:#0000FF">new</span> Rectangulo()); 
+    } 
+      
+    <span style="color:#0000FF">public</span> <span style="color:#0000FF">void</span> TestCalculoAreaCuadrado() 
+    { 
+        testAreaFiguraRectangular(<span style="color:#0000FF">new</span> Cuadrado()); 
+    }
+
+    <span style="color:#0000FF">private</span> <span style="color:#0000FF">void</span> testAreaFiguraRectangular(Rectangulo rect) 
+    { 
+        rect.Alto=10; 
+        rect.Ancho=2; 
+        Assert.AreEqual(20, rect.Area());
+    }
+}
+</pre>
+<p>
+Cuando la variable rectángulo sea una instancia de la clase Cuadrado este test va a fallar (el área del cuadrado va a ser 2*2=4 en lugar de 2*10=20).
+</p>
+<p>
+Esto ocurre porque se ha violado el principio LSP. Nuestro test referencia a la clase base Rectángulo y al utilizar una instancia de Cuadrado (clase derivada de Rectángulo) el test comienza a fallar.
+</p>
+<!-- ************************************* Una Marca (h4)*** -->
+<h4 id="Refh4_Sub_tipos_Vs_Sub_clases_Y_Disenyo_Por_Contrato" style="margin-top:0cm;">        Sub-tipos vs Sub-clases y Diseño por Contrato
+    </h4>
+<p>
+Una vez planteado el ejemplo viene bien mencionar un par de conceptos que ayudan a entender un poco mas cuándo se puede estar violando LSP y cuándo no.
+</p>
+<p>
+Barbara Liskov definió como <span style="font-weight:bold;">sub-tipo</span> a la propiedad que tiene un objeto A de poder reemplazar a otro objeto B sin que el comportamiento de los objetos que los utilizan deba ser modificado (A es un sub-tipo de B)
+</p>
+<p>
+En nuestro ejemplo el Cuadrado no puede reemplazar al Rectángulo ya que el comportamiento de nuestro test debería ser modificado para que siga funcionando correctamente, probablemente haciendo algo así:
+</p>
+<pre><p class="pre_titulo">
+Listado 6
+</p>
+<span style="color:#0000FF">private</span> <span style="color:#0000FF">void</span> testAreaFiguraRectangular(Rectangulo rect)
+{
+    rect.Alto = 10;
+    rect.Ancho = 2;
+    <span style="color:#0000FF">if</span> (rect <span style="color:#0000FF">is</span> Cuadrado)
+        Assert.AreEqual(4, rect.Area());
+    <span style="color:#0000FF">else</span>
+        Assert.AreEqual(20, rect.Area());
+}
+</pre>
+<p>
+<span style="font-style:italic ; font-weight:bold;">De aquí se deduce que el Cuadrado puede ser una sub-clase del Rectángulo, pero no es un sub-tipo, según la definición de Liskov. Por lo tanto, que una clase herede de otra no nos asegura el principio LSP.</span>
+</p>
+<p>
+Otro concepto que vale la pena mencionar es el de <span style="font-weight:bold;" class="UnaPalabraClave">diseño por contrato</span>, que se puede resumir en que los métodos de una clase declaran pre-condiciones y post-condiciones. Las pre-condiciones se deben cumplir para que el método se ejecute y, cuando finalice la ejecución del método, también deben de cumplirse las post-condiciones.
+</p>
+<p>
+Para no violar LSP, cuando se redefinen los métodos de las cases derivadas, se deben respetar tanto las pre-condiciones como las post-condiciones definidas en la clase base, es decir, el comportamiento de una clase no debe romper ninguna de las restricciones impuestas por la clase base.
+</p>
+<p>
+En el ejemplo del rectángulo y el cuadrado, las post-condiciones del método Ancho definidas en la clase base Rectángulo son las siguientes:
+</p>
+<ul><li>
+"El ancho tiene el nuevo valor asignado"
+</li>
+
+<li>
+"El alto se mantiene con el mismo valor que tenía antes"
+</li></ul>
+<p>
+La segunda post-condición no se respeta en la redefinición del método Ancho de la clase Cuadrado, ya que ante un cambio en el ancho, también se modifica el alto en forma automática.
+</p>
+<p>
+Ya puestos vamos a ver una implementación diferente de la propiedad Ancho de la clase cuadrado que tampoco respeta las pre-condiciones de la clase base rectángulo, sería por ejemplo algo así:
+</p>
+<pre><p class="pre_titulo">
+Listado 7
+</p>
+<span style="color:#0000FF">public</span> <span style="color:#0000FF">override</span> <span style="color:#0000FF">int</span> Ancho
+{
+    <span style="color:#0000FF">get</span>
+    {
+        <span style="color:#0000FF">return</span> <span style="color:#0000FF">base</span>.Ancho;
+    }
+    <span style="color:#0000FF">set</span>
+    {
+        <span style="color:#0000FF">if</span> (<span style="color:#0000FF">value</span> == 0)
+            <span style="color:#0000FF">throw</span> <span style="color:#0000FF">new</span> Exception(<span style="color:#B22222">"El ancho debe ser distinto de 0"</span>);
+ 
+        <span style="color:#0000FF">base</span>.Ancho = <span style="color:#0000FF">value</span>;
+        <span style="color:#0000FF">base</span>.Alto = <span style="color:#0000FF">value</span>;
+    }
+}
+</pre>
+<p>
+En este caso, estamos pidiendo que el ancho sea distinto de cero como pre-condición de la propiedad Ancho en la clase Cuadrado, mientras que esa restricción no se exige en la clase Rectángulo.
+</p>
+<!-- ************************************* Una Marca (h3)*** -->
+<hr class="HrSubir" style="margin-top:1cm;">
+<p style="text-align: right; margin: 0px;">      <a href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#Seccion_InicioDocumento" title="Ir a la parte superior de la página" onmouseover="window.status=&#39;Ir a la parte superior de la página&#39;; return true" onmouseout="window.status=&#39;&#39;; return true">           ↑↑↑
+      </a>
+   </p>
+<h3 id="Refh3_LSP_Y_Las_Interfaces" style="margin-top:0cm;">        
+LSP y las interfaces
+    </h3>
+<p>
+Por último vale la pena mencionar qué pasa con las interfaces. Si en lugar de heredar de una clase base con comportamiento ya definido, se implementa una interfaz, ¿hay pre-condiciones y post-condiciones que respetar? La respuesta es: en la mayoría de los casos si las hay, y por lo general son implícitas y se desprenden del sentido común.
+</p>
+<!-- ************************************* Una Marca (h3)*** -->
+<hr class="HrSubir" style="margin-top:1cm;">
+<p style="text-align: right; margin: 0px;">      <a href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#Seccion_InicioDocumento" title="Ir a la parte superior de la página" onmouseover="window.status=&#39;Ir a la parte superior de la página&#39;; return true" onmouseout="window.status=&#39;&#39;; return true">           ↑↑↑
+      </a>
+   </p>
+<h3 id="Refh3_Otro_Ejemplo_Que_NO_Cumple_El_Principio_LSP" style="margin-top:0cm;">        Otro Ejemplo que NO cumple el principio LSP
+    </h3>
+<p>
+Supongamos que tenemos una interfaz para nuestros objetos DAO como la siguiente:
+</p>
+<ul><li>
+<span style="font-style:italic ;"><span class="nota_verde">Nota:</span> Un Data Access Object (DAO, Objeto de Acceso a Datos) es un componente de software que suministra una interfaz común entre la aplicación y uno o más dispositivos de almacenamiento de datos, tales como una Base de datos o un archivo. </span>
+</li></ul>
+<pre><p class="pre_titulo">
+Listado 7
+</p>
+<span style="color:#0000FF">public</span> <span style="color:#0000FF">interface</span> IDao
+{
+    <span style="color:#0000FF">void</span> Insert(<span style="color:#0000FF">object</span> entity);
+    <span style="color:#0000FF">void</span> Update(<span style="color:#0000FF">object</span> id, <span style="color:#0000FF">object</span> entity);
+    <span style="color:#0000FF">void</span> Delete(<span style="color:#0000FF">object</span> id);
+    <span style="color:#0000FF">object</span>[] GetAll();
+    <span style="color:#0000FF">object</span> GetById(<span style="color:#0000FF">object</span> id);
+}
+</pre>
+<p>
+Luego decido usar la interface para mis Facturas
+</p>
+<pre><p class="pre_titulo">
+Listado 7
+</p>
+<span style="color:#0000FF">public</span> <span style="color:#0000FF">class</span> FacturaDao : IDao
+{
+    <span style="color:#0000FF">public</span> <span style="color:#0000FF">void</span> Insert(<span style="color:#0000FF">object</span> entity)
+    {
+        <span style="color:#008000">//se inserta una factura  </span>
+    }
+    <span style="color:#0000FF">public</span> <span style="color:#0000FF">void</span> Update(<span style="color:#0000FF">object</span> id, <span style="color:#0000FF">object</span> entity)
+    {
+        <span style="color:#008000">//se actualiza una factura  </span>
+    }
+    <span style="color:#0000FF">public</span> <span style="color:#0000FF">void</span> Delete(<span style="color:#0000FF">object</span> id)
+    {
+        <span style="color:#008000">//se elimina una factura </span>
+    }
+    <span style="color:#0000FF">public</span> <span style="color:#0000FF">object</span>[] GetAll()
+    {
+        <span style="color:#008000">//se obtienen todas las facturas </span>
+    }
+    <span style="color:#0000FF">public</span> <span style="color:#0000FF">object</span> GetById(<span style="color:#0000FF">object</span> id)
+    {
+        <span style="color:#008000">//se obtiene una factura por id  }</span>
+    }
+}
+</pre>
+<p>
+En este momento… y por algún motivo inexplicable necesito crear una capa de acceso a datos que sólo permita lecturas de facturas. La implementación de la clase debería ser como la siguiente:
+</p>
+<pre><p class="pre_titulo">
+Listado 7
+</p>
+<span style="color:#0000FF">public</span> <span style="color:#0000FF">class</span> FacturaDaoReadOnly : IDao
+{
+    <span style="color:#0000FF">public</span> <span style="color:#0000FF">void</span> Insert(<span style="color:#0000FF">object</span> entity)
+    {
+        <span style="color:#0000FF">throw</span> <span style="color:#0000FF">new</span> DaoReadOnlyException();
+    }
+    <span style="color:#0000FF">public</span> <span style="color:#0000FF">void</span> Update(<span style="color:#0000FF">object</span> id, <span style="color:#0000FF">object</span> entity)
+    {
+        <span style="color:#0000FF">throw</span> <span style="color:#0000FF">new</span> DaoReadOnlyException();
+    }
+    <span style="color:#0000FF">public</span> <span style="color:#0000FF">void</span> Delete(<span style="color:#0000FF">object</span> id)
+    {
+        <span style="color:#0000FF">throw</span> <span style="color:#0000FF">new</span> DaoReadOnlyException();
+    }
+    <span style="color:#0000FF">public</span> <span style="color:#0000FF">object</span>[] GetAll()
+    {
+        <span style="color:#008000">//se obtienen todas las facturas  </span>
+    }
+    <span style="color:#0000FF">public</span> <span style="color:#0000FF">object</span> GetById(<span style="color:#0000FF">object</span> id)
+    {
+        <span style="color:#008000">//se obtiene una factura por id  </span>
+    }
+}
+</pre>
+<!-- ' -->
+<!-- Una Imagen Empieza -->
+<div style="text-align:center;"><img src="./[LSP] Principio de sustitución de Liskov_files/image004.png" alt="Figura 4" title="Figura 4" height="419" width="405" style="border-width:0px;">
+<p class="textoPieImagen">
+Figura 4
+</p></div>
+<!-- /Una Imagen Termina -->
+<p>
+Aquí el problema que se presenta es que las clases que interactúen con IDao, van a tener que tener en cuenta que en algunos casos los métodos Insert, Update y Delete pueden lanzar una excepción DaoReadOnlyException, lo cual viola el principio de Liskov por los siguientes motivos:
+</p>
+<ul><li>
+No se estarían cumpliendo las post-condiciones de los métodos Insert, Update y Delete porque se debe contemplar que el Dao puede lanzar una excepción DaoReadOnlyException, lo cual es una post-condición particular de una implementación concreta del Dao, en este caso el dao readonly de Facturas.
+</li>
+
+<li>
+No se estaría cumpliendo el concepto de diseño por contrato, ya que en ninguna parte de la interfaz IDao se sugiere que un Dao puede ser readonly.
+</li>
+
+<li>
+Una posible forma de solucionar esto sería mediante la separación en distintas interfaces de las distintas acciones del Dao, por ejemplo IDaoLectura, IDaoEscritura.
+</li></ul>
+<!-- ************************************* Una Marca (h2)*** -->
+<p>
+   
+</p>
+<hr class="HrSubir" style="margin-top:1cm;">
+<p style="text-align: right; margin: 0px;">      <a href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#Seccion_InicioDocumento" title="Ir a la parte superior de la página" onmouseover="window.status=&#39;Ir a la parte superior de la página&#39;; return true" onmouseout="window.status=&#39;&#39;; return true">           ↑↑↑
+      </a>
+   </p>
+<h2 id="Refh2_Resumiendo" style="margin-top:0cm;">        Resumiendo 
+    </h2>
+<p>
+Podemos decir que un sistema que use este principio será más fácil de mantener que otro que no lo use. Este principio está relacionado con otros como cohesión o acoplamiento entre clases (No hables con extraños) y con los patrones de diseño de tipo factorías (¿cómo se si debo desde el cliente usar la clase A o la B?)
+</p>
+<!-- ************************************* Una Marca (h2)*** -->
+<hr class="HrSubir" style="margin-top:1cm;">
+<p style="text-align: right; margin: 0px;">      <a href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#Seccion_InicioDocumento" title="Ir a la parte superior de la página" onmouseover="window.status=&#39;Ir a la parte superior de la página&#39;; return true" onmouseout="window.status=&#39;&#39;; return true">           ↑↑↑
+      </a>
+   </p>
+<h2 id="Refh2_Referencia_Bibliografica" style="margin-top:0cm;">        Referencia Bibliográfica
+    </h2>
+<ul><li>
+<a href="http://es.wikipedia.org/wiki/Principio_de_sustituci%C3%B3n_de_Liskov">http://es.wikipedia.org/wiki/Principio_de_sustituci%C3%B3n_de_Liskov</a>
+</li>
+
+<li>
+<a href="http://www.genbetadev.com/cnet/el-principio-de-sustitucion-de-liskov-y-su-relacion-con-la-programacion-por-contratos">http://www.genbetadev.com/cnet/el-principio-de-sustitucion-de-liskov-y-su-relacion-con-la-programacion-por-contratos</a>
+</li>
+
+<li>
+<a href="http://eljaviador.wordpress.com/2011/06/29/s-o-l-i-d-principio-de-sustitucion-de-liskov/">http://eljaviador.wordpress.com/2011/06/29/s-o-l-i-d-principio-de-sustitucion-de-liskov/</a>
+</li>
+
+<li>
+<a href="http://www.utopicainformatica.com/2010/09/principio-de-sustitucion-de-liskov.html#!/2010/09/principio-de-sustitucion-de-liskov.html">http://www.utopicainformatica.com/2010/09/principio-de-sustitucion-de-liskov.html#!/2010/09/principio-de-sustitucion-de-liskov.html</a>
+</li>
+
+<li>
+<a href="http://msdn.microsoft.com/es-es/magazine/cc546578.aspx">http://msdn.microsoft.com/es-es/magazine/cc546578.aspx</a>
+</li>
+
+<li>
+<a href="http://scriptinside.blogspot.com.es/2012/07/principio-de-sustitucion-de-liskov-lsp.html">http://scriptinside.blogspot.com.es/2012/07/principio-de-sustitucion-de-liskov-lsp.html</a>
+</li>
+
+<li>
+<a href="http://msdn.microsoft.com/es-es/magazine/hh288081.aspx">http://msdn.microsoft.com/es-es/magazine/hh288081.aspx</a>
+</li>
+
+<li>
+<a href="http://jorgerowies.blogspot.com.es/2011/01/principio-de-substitucion-de-liskov.html">http://jorgerowies.blogspot.com.es/2011/01/principio-de-substitucion-de-liskov.html</a>
+</li></ul>
+<!-- ==================================  -->
+<!--    FIN CUERPO DEL DOCUMENTO         -->
+<!-- ==================================  -->
+<!-- Cerrando Etiqueta DIV -->
+</div>
+<!-- ==================================  -->
+<!--   /FIN CUERPO DEL DOCUMENTO         -->
+<!-- ==================================  -->
+
+
+
+
+
+<!-- ================  -->
+<!-- anexos_2_enlaces  -->
+<!-- ================  -->
+<!-- ********************************************** Una Marca (3)*** --> 
+<div id="Seccion_Anexos_2_Enlaces">
+
+   <hr class="HrSubir" style="margin-top:1cm;">
+   <p style="text-align: right; margin: 0px;">
+      <a href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#Seccion_InicioDocumento" title="Ir a la parte superior de la página" onmouseover="window.status=&#39;Ir a la parte superior de la página&#39;; return true" onmouseout="window.status=&#39;&#39;; return true">
+           ↑↑↑
+      </a>
+   </p>
+
+    <h3 id="RefA2Enlaces" style="margin-top: 0px;">A.2.Enlaces</h3>
+    <!-- Comienza la lista de referecias -->
+    <dl>
+        <!-- Comienzan enlaces 'Para saber mas' -->
+        <dt id="refParaSaberMas"><strong>[Para saber mas]</strong></dt>
+            
+            <!-- Un Enlace  -->
+            <dd>
+            </dd>
+        <!-- Comienzan enlaces 'Grupo de documentos' -->
+        <dt id="refGrupoDocumentos" style="margin-top:0.5cm;"><strong>[Grupo de documentos]</strong></dt>
+            
+            <!-- Un Enlace  -->
+            <dd>
+                <a href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/__OopIndiceDocs.html" title="Documento indice local" onmouseover="window.status=&#39;Documento indice local&#39;; return true" onmouseout="window.status=&#39;&#39;; return true">
+                [Documento Index]
+                </a>
+            </dd>
+          <!-- Un Enlace  -->
+            <dd>
+                <a href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/2012_09_04_PDOOPrincipioDisenyo_Indice.html" title="Documento indice local" onmouseover="window.status=&#39;Documento indice local&#39;; return true" onmouseout="window.status=&#39;&#39;; return true">
+                    [Apuntes sobre principios de diseño] </a>
+            </dd>
+            
+            <!-- Un Enlace  -->
+            <dd>
+                <a href="http://joaquin.medina.name/" title="Documento Home" onmouseover="window.status=&#39;Documento Home&#39;; return true" onmouseout="window.status=&#39;&#39;; return true">
+                [Documento Start]
+                </a>
+            </dd>
+            
+            <!-- Un Enlace  -->
+            <dd>
+                <a href="http://jms32.eresmas.net/web2008/documentos/informatica/documentacion/logica/OOP/Principios/Oop_Solid_LSP/2012_09_14_SOLID_ListkowSubstitutionPrincipe.html#" title="Imprimir éste documento en la impresora" onmouseover="window.status=&#39;Imprimir éste documento en la impresora&#39;; return true" onmouseout="window.status=&#39;&#39;; return true" onclick="
+                    if (window.print)
+                         window.print(); 
+                    else
+                         alert(&#39; ¡¡ PROBLEMA !! Imprime desde los menus del navegador&#39;);">
+                [Imprimir el Documento]
+                </a>
+            </dd>
+            
+            <!-- Un Enlace  -->
+            <dd>
+                
+<!-- ' -->
+<script type="text/javascript">
+//<![CDATA[
+
+// --------------------------------------------
+// JavaScript que monta un enlace que a&#241;ade la pagina a favoritos.
+// Si el navegador no es soporta la funci&#243;n (Netscape) genera un 
+// texto que recuerda como incluir la pagina en favoritos 
+// mediante pulsaciones de teclado (Ctrl + D)
+// Utiliza el valor [document.location]
+// Utiliza el valor [document.title]
+// Utiliza el valor [javascript:window.external.AddFavorite]
+// mailto:Joquin@medina.name
+// --------------------------------------------
+
+function IncluirEnFavoritos (){   
+    var TextoSalida='&#161; No Olvides &#241;adir &#233;ste sitio a tus marcadores favoritos ! ';
+    var urlLocation=this.document.location + '' ;
+    var tituloDocumento=this.document.title+ '' ;
+    if (tituloDocumento.lenght==0) {
+        tituloDocumento='Documento sin t&#237;tulo';
+    }
+    // --------------------------------------------
+    // Si puedo acceder a la localizacion y el navegador 
+    // es del tipo Microsoft Internet Explorer Version >4
+    // entonces montar el enlace 
+    // en caso contrario 
+    // emitir el mensaje pulsa (Ctrl + D) para boomark
+    // --------------------------------------------
+
+    // --------------------------------------------
+    // Si aparece la cadena file:///... es que estoy 
+    // viendo un archivo local y se produce un error
+    // indicarlo en el mensaje 
+    // Si no aparece continuar con el proceso
+    // Valor devuelto:
+    // posicion de la cadena si existe
+    // valor (-1) si no existe
+    // --------------------------------------------
+
+    if (urlLocation.indexOf('file:///')>= 0) {
+         TextoSalida='Estas leyendo un documento local. No se puede incluir en favoritos ';
+    }
+    else {
+
+        if ((urlLocation) && ((navigator.appName == "Microsoft Internet Explorer") && 
+                          (parseInt(navigator.appVersion) >= 4))) {
+
+            // --------------------------------------------
+            // montar el enlace 
+            // --------------------------------------------
+
+            //-----------------------------------------------------------------------
+            // Las siguientes lineas de esta funcion escriben el siguiente texto
+            //<a title="el texto del titulo de la paguna web"
+            //   href="javascript:window.external.AddFavorite("
+            //        'la url de la pagina web',
+            //        'el texto del titulo de la paguna web');"
+            //    onMouseOver=" window.status='&#161;A&#241;ade este sitio a tus marcadores favoritos!'; return true ;"
+            //    onMouseOut=" window.status=' '; return true ;" >
+             //          &#161;A&#241;ade este sitio a tus marcadores favoritos!  
+             //</a> 
+            //-----------------------------------------------------------------------
+            TextoSalida=''; 
+            TextoSalida=TextoSalida + '<a title="' + tituloDocumento + '"';
+            TextoSalida=TextoSalida + 'href="';
+            TextoSalida=TextoSalida + 'javascript:window.external.AddFavorite(';
+            TextoSalida=TextoSalida + "'" +  urlLocation + "'"
+            TextoSalida=TextoSalida + ','
+            TextoSalida=TextoSalida + "'" +  tituloDocumento + "'"
+            TextoSalida=TextoSalida + ');"';
+
+            TextoSalida=TextoSalida + 'onMouseOver="';
+            TextoSalida=TextoSalida + 'window.status=';
+            TextoSalida=TextoSalida + "'&#161;A&#241;ade &#233;ste sitio a tus marcadores favoritos&#33;';";
+            TextoSalida=TextoSalida + 'return true ;";'
+
+            TextoSalida=TextoSalida + 'onMouseOut="';
+            TextoSalida=TextoSalida + 'window.status=' ;
+            TextoSalida=TextoSalida + "' '" ;
+            TextoSalida=TextoSalida + '; return true ;"';
+
+            TextoSalida=TextoSalida + '> &#161;A&#241;ade &#233;ste sitio a tus marcadores favoritos&#33; </a>';
+            //alert(TextoSalida);
+        }
+        else {
+            // otro navegador, netscape u Opera
+            //TextoSalida = '&#161; No Olvides &#241;adir &#233;ste sitio a tus marcadores favoritos ! ';
+             if(navigator.appName == "Netscape") TextoSalida=TextoSalida+ "  Pulsa (Ctrl + D) ";
+        }
+    }
+    var urlLocation = '';
+    var titulo = '';
+    return TextoSalida;
+}
+// ----------------------
+
+// ----------------------
+// Usando la funcion
+document.write(IncluirEnFavoritos());
+// ----------------------
+
+//]]>
+</script>¡ No Olvides ñadir éste sitio a tus marcadores favoritos !   Pulsa (Ctrl + D) 
+<!-- ' -->
+
+
+            </dd>
+    <!-- Final la lista de referecias -->
+    </dl>
+<!-- Cerrar div Seccion_Anexos_2_Enlaces -->
+</div>
+<!-- Termina Anexos_2_Enlaces -->
+<!-- ' -->
+
+
+
+
+
+    <!-- ' -->
+    <!-- ================  -->
+    <!-- Pie de la pagina  -->
+    <!-- ================  -->
+    <footer>
+    <div id="Seccion_PieDePagina">
+        <!-- ' -->
+        <!-- ===================================================================== -->
+        <!-- Tabla con las tres lineas del texto del pie de pagina  -->
+        <div style="text-align: center; border-top: 1cm; margin: 0;">
+            <table border="0" cellspacing="0" cellpadding="0" width="100%" summary="Pie General del documento" class="PieDePagina_Tabla">
+                <tbody>
+                    <!-- Linea uno -->
+                    <tr>
+                        <td class="PieDePagina_LineaCopyright">
+                            © 1997 -
+                            <script type="text/javascript">
+//<![CDATA[
+                                //<!--  Proceso para obtener el a&#241;o actual -->
+                                var hoy = new Date();
+                                var anyoCorregido = hoy.getFullYear(); // anyo con 4 cifras
+                                if (anyoCorregido.lenght == 0) {
+                                    document.write("2009");
+                                }
+                                else {
+                                    document.write(anyoCorregido);
+                                }
+//]]></script>2015
+                            - La Güeb de Joaquín
+                        </td>
+                    </tr>
+                    <!-- FIN Linea uno -->
+                    <!-- Linea dos -->
+                    <tr>
+                        <td>
+                            <!-- ' -->
+                            <!-- ===================================================================== -->
+                            <!-- Nombre y direccion del autor  -->
+                            <!-- Ficha de contacto VCard -->
+                            <div id="hcard_Joaquin_Medina_Serrano" class="vcard">
+                                <span class="fn">Joaquín Medina Serrano</span>
+                                <!-- Direccion de correo   -->
+                                <script type="text/javascript">
+//<![CDATA[
+                                    //<!--  Proceso para evitar que los robots lean la direccion de correo -->
+                                    //<!--  http://www.webexperto.com/articulos/articulo.php?cod=141  -->
+                                    var protocolo = "mailto:";
+                                    var usuario = "joaquin@";
+                                    var dominio = "medina.name";
+                                    document.write('[<a class="email" ' +
+'href="' + protocolo + usuario + dominio + ' " ' +
+'title= "  Direcci&#242;n de correo electr&#242;nico protegida  " ' +
+' > Mail <\/a>] ') 
+//]]>
+                                </script>[<a class="email" href="mailto:joaquin@medina.name" title="  Direcciòn de correo electrònico protegida  "> Mail </a>] 
+                                <!-- Direccion web   -->
+                                <script type="text/javascript">
+//<![CDATA[
+                                    //<!--  Proceso para evitar que los robots lean la direccion de correo -->
+                                    //<!--  http://www.webexperto.com/articulos/articulo.php?cod=141  -->
+                                    var protocolo = "http://";
+                                    var usuario = "joaquin.";
+                                    var dominio = "medina.name/";
+                                    document.write('[<a class="url" ' +
+'href="' + protocolo + usuario + dominio + ' " ' +
+'title= " Direcci&#242;n de correo electr&#242;nico protegida " ' +
+' > Web <\/a>] ') 
+//]]>
+                                </script>[<a class="url" href="http://joaquin.medina.name/" title=" Direcciòn de correo electrònico protegida "> Web </a>] 
+                            </div>
+                            <!-- /Fin Ficha de contacto VCard -->
+                            <!-- /FIN Nombre y direccion del autor  -->
+                            <!-- ===================================================================== -->
+                        </td>
+                    </tr>
+                    <!-- FIN Linea dos -->
+                    <!-- Linea tres -->
+                    <tr>
+                        <td>
+                            <!-- ' -->
+                            <!-- ===================================================================== -->
+                            <!-- Linea con la bandera y el texto Espa&#241;a-->
+                            <div style="text-align: center; border: 0; margin: 0;">
+                                <table style="text-align: center; border: 0; margin: 0;" border="0" cellpadding="0" cellspacing="0" summary="Bandera de España, Texto Ésta página es española, imagenes del pie de la página">
+                                    <tbody><tr>
+                                        <!-- La bandera -->
+                                        <td>
+                                            <!-- Tabla con la bandera de espanya -->
+                                            <table style="float: left;" summary="Bandera de España, Ésta página es española" cellpadding="0" cellspacing="0" title="Ésta página es española">
+                                                <tbody><tr>
+                                                    <td style="background-color: red; width: 65px; height: 8px; border: 0; margin: 0">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="background-color: yellow; width: 65px; height: 11px; border: 0; margin: 0">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="background-color: red; width: 65px; height: 8px; border: 0; margin: 0">
+                                                    </td>
+                                                </tr>
+                                            </tbody></table>
+                                            <!-- Fin de la Tabla con la bandera de espanya -->
+                                        </td>
+                                        <!-- El texto -->
+                                        <td>
+                                            <strong>Ésta página es española</strong>
+                                        </td>
+                                    </tr>
+                                </tbody></table>
+                                <!-- Final de la tabla que contiene la linea tres -->
+                            </div>
+                            <!-- ' -->
+                            <!-- /FIN Linea  con la bandera y el texto Espanya-->
+                            <!-- ===================================================================== -->
+                        </td>
+                    </tr>
+                    <!-- ' -->
+                    <!-- Aqui acaba la linea tres-->
+                </tbody>
+            </table>
+            <!-- ********* FINAL  Pie General de Pagina ******* -->
+        </div>
+        <!-- ' -->
+        <!-- /FIN Tabla con las tres lineas del texto del pie de pagina  -->
+        <!-- ===================================================================== -->
+        <!-- ' -->
+        <!-- ===================================================================== -->
+        <!-- Info basica del documento  -->
+        <!-- ===================================================================== -->
+        <script type="text/javascript">
+//<![CDATA[
+            //<!-- ++++++++++++++++++++++ Ultima actualizacion +++++++++++++++ -->   Ultima
+            function FechaUltimaActualizacionFormatoISO8601(pfecha) {
+                //------------------------------------------------------------
+                // la funcion devuelve la fecha formateada en formato ISO 8601:2004
+                // la fecha y la hora en formato UTC
+                // ejemplo 2010-08-25T23;41:45Z
+                //------------------------------------------------------------
+                //var fecha = new Date(document.lastModified);
+
+                if (pfecha == null) {
+                    return "No existe una fecha";
+                }
+                else {
+
+                    // poner una cadena vacia delante para convertir el numero en cadena
+                    var fecha = new Date(pfecha);
+
+                    var anyo = "" + fecha.getFullYear(); // anyo con 4 cifras
+
+                    var mes = fecha.getUTCMonth(fecha);
+                    mes = "" + (mes + 1); // suma runo al mes ( rango devuelto [0-11])
+                    if (mes.length < 2) { mes = "0" + mes }; // el mes con dos cifras siempre
+
+                    var dia = "" + fecha.getUTCDate(fecha);
+                    if (dia.length < 2) { dia = "0" + dia }; // el dia con dos cifras siempre
+
+                    var hora = "" + fecha.getUTCHours();
+                    if (hora.length < 2) { hora = "0" + hora }; // el hora con dos cifras siempre
+
+                    var minutos = "" + fecha.getUTCMinutes();
+                    if (minutos.length < 2) { minutos = "0" + minutos }; // el minutos con dos cifras siempre
+
+                    var segundos = "" + fecha.getUTCSeconds();
+                    if (segundos.length < 2) { segundos = "0" + segundos }; // el minutos con dos cifras siempre
+
+                    return anyo + "-" + mes + "-" + dia + "T" + hora + ":" + minutos + ":" + segundos + "Z"
+                }
+            } // End funcion
+            //var fecha = new Date(document.lastModified);
+            //   document.write("Fecha de creaci&#243;n : " + FechaUltimaActualizacionFormatoISO8601(document.fileCreatedDate) + "<br />");
+            //   document.write("&#218;ltima actualizaci&#243;n : " + FechaUltimaActualizacionFormatoISO8601(document.lastModified));
+//]]>
+        </script>
+        <hr>
+        <table style="text-align: left; border: 0; margin: 0;" border="0" cellpadding="2" cellspacing="2" summary="Información adicional del documento">
+            <!-- Linea uno de la tabla -->
+            <!-- ++++++++++++++++++++++ Codificacion del documento +++++++++++++++ -->
+            <tbody><tr>
+                <td>
+                    Codificación
+                </td>
+                <td>
+                    <script type="text/javascript">
+//<![CDATA[
+
+                        document.write(document.charset);
+//]]>
+                    </script>UTF-8
+                </td>
+            </tr>
+            <!-- Linea dos de la tabla -->
+            <!-- ++++++++++++++++++++++  Fecha de creacion del documento +++++++++++++++ -->
+            <tr>
+                <td>
+                    Fecha de creación
+                </td>
+                <td>
+                    <script type="text/javascript">
+                            //<![CDATA[
+                        document.write(FechaUltimaActualizacionFormatoISO8601(document.fileCreatedDate));
+                            //]]>
+                    </script>No existe una fecha
+                </td>
+            </tr>
+            <!-- Linea tres de la tabla -->
+            <!-- ++++++++++++++++++++++  Fecha de ultima actualizacion del documento +++++++++++++++ -->
+            <tr>
+                <td>
+                    Última actualización
+                </td>
+                <td>
+                    <script type="text/javascript">
+                            //<![CDATA[
+                        document.write(FechaUltimaActualizacionFormatoISO8601(document.lastModified));
+                            //]]>
+                    </script>2015-09-02T11:16:25Z
+                </td>
+            </tr>
+        </tbody></table>
+        <hr>
+      </div>
+      </footer>     
+      <!-- ' -->
+      <!-- ================  -->
+      <!-- fin de la  Seccion_PieDePagina -->  
+      <!-- ================  -->
+
+
+<script> 
+var logDomain  = 'www.wanadoo.es'; 
+var logChannel = 'miweb'; 
+var logPath	   = 'control_net'; 
+</script> 
+<script src="./[LSP] Principio de sustitución de Liskov_files/logs.js"></script> 
+</body></html>
